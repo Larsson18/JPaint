@@ -1,4 +1,7 @@
-package se.miun.rola2200.dt187g.jpaint;
+package se.miun.rola2200.dt187g.jpaint.geometry;
+
+import se.miun.rola2200.dt187g.jpaint.Drawable;
+import java.util.ArrayList;
 
 /**
  * An abstract class representing the general concept of a shape.
@@ -13,12 +16,12 @@ package se.miun.rola2200.dt187g.jpaint;
 
 public abstract class Shape implements Drawable {
     private String color;
-    protected Point[] points;
+    protected ArrayList<Point> points;
 
     public Shape(Point p, String color) {
         this.color = color;
-        this.points = new Point[2];
-        this.points[0] = p;
+        this.points = new ArrayList<>();
+        this.points.add(p);
     }
 
     public void setColor(String color) {
@@ -33,9 +36,13 @@ public abstract class Shape implements Drawable {
 
     public abstract double getArea();
 
-    public abstract void addPoint(Point p);
+    public void addPoint(Point p){
+        this.points.add(p);
+    }
 
-    public abstract void addPoint(double x, double y);
+    public void addPoint(double x, double y) {
+        this.points.add(new Point(x, y));
+    }
 
     public abstract boolean hasEndPoint();
 }

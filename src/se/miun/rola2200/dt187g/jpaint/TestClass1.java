@@ -1,5 +1,10 @@
 package se.miun.rola2200.dt187g.jpaint;
 
+import se.miun.rola2200.dt187g.jpaint.geometry.Circle;
+import se.miun.rola2200.dt187g.jpaint.geometry.Point;
+import se.miun.rola2200.dt187g.jpaint.geometry.Rectangle;
+import se.miun.rola2200.dt187g.jpaint.geometry.Shape;
+
 /**
  * <h1>TestClass1</h1>
  * This application creates different shapes and calls various

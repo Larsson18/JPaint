@@ -1,4 +1,4 @@
-package se.miun.rola2200.dt187g.jpaint;
+package se.miun.rola2200.dt187g.jpaint.geometry;
 
 /**
  * A class representing a rectangle, defined by a starting point
@@ -23,14 +23,14 @@ public class Rectangle extends Shape {
         if (!hasEndPoint()) {
             return 0;
         }
-        return Math.abs(points[1].getX() - points[0].getX());
+        return Math.abs(points.get(1).getX() - points.get(0).getX());
     }
 
     public double getHeight() {
         if (!hasEndPoint()) {
             return 0;
         }
-        return Math.abs(points[1].getY() - points[0].getY());
+        return Math.abs(points.get(1).getY() - points.get(0).getY());
     }
 
     @Override
@@ -61,10 +61,10 @@ public class Rectangle extends Shape {
 
     @Override
     public void addPoint(Point p) {
-        if (points[1] == null) {
-            points[1] = p;
+        if (points.size() < 2) {
+            points.add(p);
         } else {
-            points[1] = p;
+            points.set(1, p);
         }
     }
 
@@ -75,24 +75,23 @@ public class Rectangle extends Shape {
 
     @Override
     public boolean hasEndPoint() {
-        return points[1] != null;
+        return points.size() == 2;
     }
 
     @Override
     public String toString() {
-        return "Drawing a Rectangle[start=" +
-                (points.length > 0 && points[0] != null ? String.format("[%s, %s]", points[0].getX(), points[0].getY())
-                        : "N/A")
-                +
-                "; end=" +
-                (points.length > 1 && points[1] != null ? String.format("[%s, %s]", points[1].getX(), points[1].getY())
-                        : "N/A")
-                +
-                "; width=" +
-                (points.length > 1 && points[1] != null ? getWidth() : "N/A") +
-                "; height=" +
-                (points.length > 1 && points[1] != null ? getHeight() : "N/A") +
-                "; color=" + getColor() + "]";
+        String startStr = points.size() > 0 && points.get(0) != null
+                ? String.format("[%s, %s]", points.get(0).getX(), points.get(0).getY())
+                : "N/A";
+        String endStr = points.size() > 1 && points.get(1) != null
+                ? String.format("[%s, %s]", points.get(1).getX(), points.get(1).getY())
+                : "N/A";
+        String widthStr = points.size() > 1 && points.get(1) != null ? String.valueOf(getWidth()) : "N/A";
+        String heightStr = points.size() > 1 && points.get(1) != null ? String.valueOf(getHeight()) : "N/A";
+
+        return "Drawing a Rectangle[start=" + startStr + "; end=" + endStr + "; width=" + widthStr + "; height="
+                + heightStr + "; color=" + getColor() + "]";
+
     }
 
 }

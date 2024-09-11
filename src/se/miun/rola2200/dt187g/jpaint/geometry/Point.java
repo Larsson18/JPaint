@@ -1,4 +1,4 @@
-package se.miun.rola2200.dt187g.jpaint;
+package se.miun.rola2200.dt187g.jpaint.geometry;
 
 /**
  * A class representing a point in 2D space, defined by x and y coordinates.
