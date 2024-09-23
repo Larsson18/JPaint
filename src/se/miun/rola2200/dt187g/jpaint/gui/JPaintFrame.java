@@ -56,6 +56,9 @@ public class JPaintFrame extends JFrame {
 		header = "JPaint";
 		this.setTitle(header);
 
+
+
+		
 		/*
 		 * 5. Sätt layout för denna klass till BorderLayout
 		 */
