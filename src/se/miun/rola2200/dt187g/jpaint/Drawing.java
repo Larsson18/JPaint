@@ -3,12 +3,25 @@ package se.miun.rola2200.dt187g.jpaint;
 import java.util.ArrayList;
 import se.miun.rola2200.dt187g.jpaint.geometry.Shape;
 
+/**
+ * The Drawing class represents a collection of shapes that together form a drawing.
+ * It implements the Drawable interface to allow for drawing operations.
+ * 
+ * The Drawing class maintains a list of shapes and provides functionality to manage these shapes,
+ * including adding shapes, calculating total circumference and area, and drawing the entire collection.
+ * The class also manages metadata about the drawing such as its name and author.
+ * 
+ * @rola2200
+ * @version 1.0
+ */
+
 public class Drawing implements Drawable {
     private ArrayList<Shape> shapes;
     private String name;
     private String author;
 
     public Drawing() {
+        shapes = new ArrayList<>();
     }
 
     public Drawing(String name, String author) {
@@ -33,9 +46,13 @@ public class Drawing implements Drawable {
         this.author = author;
     }
 
-    public void addShape(Shape s) {
-        if (s != null)
-            shapes.add(s);
+    public void addShape(Shape shape) {
+        if (shape != null) {
+            shapes.add(shape);
+            System.out.println("Shape added: " + shape);
+        } else {
+            System.out.println("Null shape cannot be added.");
+        }
     }
 
     public int getSize() {
@@ -44,50 +61,46 @@ public class Drawing implements Drawable {
 
     public double getTotalCircumference() {
         double totalCircumference = 0;
-        for (Shape s : shapes) {
-            totalCircumference += s.getCircumference();
+        if (shapes != null) {
+            for (Shape shape : shapes) {
+                if (shape.getCircumference() > 0) {
+                    totalCircumference += shape.getCircumference();
+                }
+            }
         }
         return totalCircumference;
     }
 
     public double getTotalArea() {
         double totalArea = 0;
-        for (Shape s : shapes) {
-            totalArea += s.getArea();
+        if (shapes != null) {
+            for (Shape shape : shapes) {
+                if (shape.getArea() > 0) {
+                    totalArea += shape.getArea();
+                }
+            }
         }
         return totalArea;
     }
 
     public void draw() {
-        System.out.println("Drawing: " + name);
-        for (Shape s : shapes) {
-            s.draw();
+        System.out.println("A drawing by " + author + " called " + name);
+        for (Shape shape : shapes) {
+            shape.draw();
         }
     }
 
     public void draw(java.awt.Graphics g) {
-        for (Shape s : shapes) {
-            s.draw(g);
-        }
+
     }
 
     @Override
     public String toString() {
-        return "Drawing{" +
-                "shapes=" + shapes +
-                ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                '}';
+        return "Drawing[name=" + (name != null ? name : "") +
+                ", author=" + (author != null ? author : "") +
+                ", size=" + (shapes != null ? shapes.size() : 0) +
+                ", totalCircumference=" + (shapes != null && !shapes.isEmpty() ? getTotalCircumference() : 0) +
+                ", totalArea=" + (shapes != null ? getTotalArea() : 0) + "]";
     }
 
-
-    // String startStr = (points.size() > 0) ? String.format("[%s, %s]", points.get(0).getX(), points.get(0).getY()) : "N/A";
-    // String endStr = (points.size() > 1) ? String.format("[%s, %s]", points.get(1).getX(), points.get(1).getY()) : "N/A";
-    // String radiusStr = (points.size() > 1) ? String.valueOf(getRadius()) : "N/A";
-
-    // return "Circle[start=" + startStr +
-    //         "; end=" + endStr +
-    //         "; radius=" + radiusStr +
-    //         "; color=" + getColor() + "]";
-    
 }

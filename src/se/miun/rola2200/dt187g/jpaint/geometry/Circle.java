@@ -68,7 +68,6 @@ package se.miun.rola2200.dt187g.jpaint.geometry;
         }
     }
 
-    // Additional implementation for overloading addPoint using coordinates
     @Override
     public void addPoint(double x, double y) {
         addPoint(new Point(x, y));
@@ -81,13 +80,12 @@ package se.miun.rola2200.dt187g.jpaint.geometry;
 
     @Override
     public String toString() {
-        String startStr = (points.size() > 0) ? String.format("[%s, %s]", points.get(0).getX(), points.get(0).getY()) : "N/A";
-        String endStr = (points.size() > 1) ? String.format("[%s, %s]", points.get(1).getX(), points.get(1).getY()) : "N/A";
-        String radiusStr = (points.size() > 1) ? String.valueOf(getRadius()) : "N/A";
-
-        return "Circle[start=" + startStr +
-                "; end=" + endStr +
-                "; radius=" + radiusStr +
-                "; color=" + getColor() + "]";
+        return "Circle[start=" +
+        (points.size() > 0 ? String.format("[%s, %s]", points.get(0).getX(), points.get(0).getY()) : "N/A") +
+        "; end=" +
+        (points.size() > 1 ? String.format("[%s, %s]", points.get(1).getX(), points.get(1).getY()) : "N/A") +
+        "; radius=" +
+        (points.size() > 1 ? String.valueOf(getRadius()) : "N/A") +
+        "; color=" + getColor() + "]";
     }
 }

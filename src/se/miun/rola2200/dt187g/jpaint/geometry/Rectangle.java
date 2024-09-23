@@ -61,12 +61,12 @@ public class Rectangle extends Shape {
 
     @Override
     public void addPoint(Point p) {
-        if (points.size() < 2) {
-            points.add(p);
-        } else {
-            points.set(1, p);
-        }
+    if (points.size() < 2) {
+        points.add(p);
+    } else {
+        points.set(1, p);
     }
+}
 
     @Override
     public void addPoint(double x, double y) {
@@ -80,18 +80,12 @@ public class Rectangle extends Shape {
 
     @Override
     public String toString() {
-        String startStr = points.size() > 0 && points.get(0) != null
-                ? String.format("[%s, %s]", points.get(0).getX(), points.get(0).getY())
-                : "N/A";
-        String endStr = points.size() > 1 && points.get(1) != null
-                ? String.format("[%s, %s]", points.get(1).getX(), points.get(1).getY())
-                : "N/A";
-        String widthStr = points.size() > 1 && points.get(1) != null ? String.valueOf(getWidth()) : "N/A";
-        String heightStr = points.size() > 1 && points.get(1) != null ? String.valueOf(getHeight()) : "N/A";
-
-        return "Drawing a Rectangle[start=" + startStr + "; end=" + endStr + "; width=" + widthStr + "; height="
-                + heightStr + "; color=" + getColor() + "]";
-
+        return "Drawing a Rectangle[start=" +
+           (points.size() > 0 ? String.format("[%s, %s]", points.get(0).getX(), points.get(0).getY()) : "N/A") +
+           "; end=" + (points.size() > 1 ? String.format("[%s, %s]", points.get(1).getX(), points.get(1).getY()) : "N/A") +
+           "; width=" + (hasEndPoint() ? String.format("%.1f", getWidth()) : "N/A") +
+           "; height=" + (hasEndPoint() ? String.format("%.1f", getHeight()) : "N/A") +
+           "; color=" + getColor() + "]";
     }
-
+    
 }

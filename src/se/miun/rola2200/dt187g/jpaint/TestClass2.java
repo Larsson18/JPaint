@@ -52,13 +52,19 @@ public class TestClass2 {
 		d1.addShape(face);
 		d1.addShape(leftEye);
 		d1.addShape(rightEye);
+		d1.addShape(nose);
+		d1.addShape(mouth);
+		
+		System.out.println(d1);
+		
+		// Add a null shape (size should not increase!).
 		System.out.println("\nSize is: " + d1.getSize());
 		System.out.println("Adding a null shape...");
-
+		
 		d1.addShape(null);
-
+		
 		System.out.println("Size is: " + d1.getSize());
-
+		
 		// Add end point to all shapes
 		System.out.println("\nAdding end point to all shapes...");
 		face.addPoint(175, 100);
