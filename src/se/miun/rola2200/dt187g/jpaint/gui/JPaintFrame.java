@@ -44,6 +44,7 @@ public class JPaintFrame extends JFrame {
 		 * root-katalogen och hänvisa till den genom "img/filenameOfYourIcon.png".
 		 */
 		// TODO
+		ImageIcon icon = new ImageIcon("img/icon.png");
 
 
 		/*
