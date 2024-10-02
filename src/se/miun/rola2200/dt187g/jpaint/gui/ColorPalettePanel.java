@@ -47,7 +47,7 @@ public class ColorPalettePanel extends JPanel {
 	 */
 	public ColorPalettePanel(ArrayList<ColorPanel> colorPanels) {
 		this.colorPanels = colorPanels;
-		layout = new GridLayout(0, 10);
+		layout = new GridLayout();
         this.setLayout(layout);
 		for (var cp : colorPanels) {
 			addColorPanel(cp);
