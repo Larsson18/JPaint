@@ -3,6 +3,7 @@ package se.miun.rola2200.dt187g.jpaint.gui;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 /**
@@ -79,6 +80,7 @@ public class MenuManager {
     
     private void createFilterMenu() {
 		// TODO for assignment 6
+
 	}
     
     /*
@@ -95,6 +97,7 @@ public class MenuManager {
     
     private ActionListener createNewDrawingAction() {
 		return al -> {
+			JOptionPane.showInputDialog(frame, "New drawing created");
 			// TODO for assignment 4
 		};
 	}
