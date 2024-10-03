@@ -14,6 +14,8 @@ public class ColorPanel extends JPanel {
 	 */
 	public ColorPanel(Color color) {
 		// TODO
+		this.setBackground(color);
+		this.setPreferredSize(new java.awt.Dimension(50, 50));
 	}
 	
 	/*
@@ -21,7 +23,7 @@ public class ColorPanel extends JPanel {
 	 */
 	public Color getColor() {
 		// TODO
-		return null; 
+		return this.getBackground();
 	}
 	
 	/*

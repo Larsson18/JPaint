@@ -14,11 +14,11 @@ public class DrawingPanel extends JPanel {
 	 */
 	
 	public DrawingPanel() {
-		// TODO
+		setBackground(Color.WHITE);
 	}
 	
 	public DrawingPanel(Color background) {
-		// TODO
+		setBackground(background);
 	}
 	
 }

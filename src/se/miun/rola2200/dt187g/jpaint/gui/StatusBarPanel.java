@@ -19,21 +19,30 @@ public class StatusBarPanel extends JPanel {
 		
 		// 1. Sätt bakgrund på detta objekt
 		// TODO
+		this.setBackground(Color.WHITE);
+		
 	
 		/*
 		 * 2. Initialisera samtliga privata datafält.
 		 *  För JLabel så är "0, 0" ett lämplig värde att skicka till konstruktorn.
 		 */
 		// TODO
+		coordinates = new JLabel("0, 0");
+		selectedColor = new JPanel();
+		leftPanel = new JPanel();
+		rightPanel = new JPanel();
 
 		// 3. Sätt Layout till BorderLayout
 		// TODO
+		this.setLayout(new BorderLayout());
 		
 		/* 4. JPanel-objektet selectedColor ska visa den färg
 		* som du anser ska vara den förvalda färgen i ritprogrammet
 		* (rimligen en av de färger som finns i färgpaletten)
 		*/
 		// TODO
+		selectedColor = new JPanel();
+		selectedColor.setBackground(Color.RED);
 		
 		/* 5. leftPanel 
 		 * - sätt bakgrunden för leftPanel
@@ -42,6 +51,9 @@ public class StatusBarPanel extends JPanel {
 		 * - Lägg sedan till instansvariabeln coordinates via samma add-metod som ovan.
 		*/
 		// TODO
+		leftPanel.setBackground(getBackground());
+		leftPanel.add(new JLabel("Coordinates: "), BorderLayout.WEST);
+		leftPanel.add(coordinates, BorderLayout.EAST);
 		
 		/* 6. rightPanel
 		 * - sätt bakgrunden för rightPanel
@@ -49,6 +61,9 @@ public class StatusBarPanel extends JPanel {
 		 * - Lägg sedan till instansvariabeln selectedColor via samma add-metod som ovan.
 		*/
 		// TODO
+		rightPanel.setBackground(getBackground());
+		rightPanel.add(new JLabel("Selected color: "), BorderLayout.WEST);
+		rightPanel.add(selectedColor, BorderLayout.EAST);
 		
 		/*
 		 * 7. Lägg till leftPanel och rightPanel genom att anropa
@@ -56,6 +71,8 @@ public class StatusBarPanel extends JPanel {
 		 * för respektive panel.
 		 */
 		// TODO
+		this.add(leftPanel, BorderLayout.WEST);
+		this.add(rightPanel, BorderLayout.EAST);
 
 
 	}
@@ -65,6 +82,7 @@ public class StatusBarPanel extends JPanel {
 	 */
 	public void updateCoordinates(int x, int y) {
 		// TODO
+		coordinates.setText(" " + x + ", " + y);
 	}
 	
 	/*
@@ -72,6 +90,8 @@ public class StatusBarPanel extends JPanel {
 	 */
 	public void updateSelectedColor(Color color) {
 		// TODO
+		selectedColor.setBackground(color);
+
 	}
 
 }

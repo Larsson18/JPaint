@@ -15,18 +15,25 @@ public class ColorPalettePanel extends JPanel {
 	 * objekt som ColorPalettePanel håller. Detta kommer vi göra i metoden
 	 * setMouseListenerForColorPanels(MouseListener listener). Mer om detta nedan.
 	 * */
-	private ArrayList<ColorPanel> colorPanels; 
+	private ArrayList<ColorPanel> colorPanels;
 	
 	
 	/*
 	 * Oavsett vilken constructor som anropas layout till ColorPalettePanel
-	 * sättas till GridLayout.*/
+	 * sättas till GridLayout.
+	 */
+    private GridLayout layout;
 	
+	 
+
+
 	/*
 	 * För denna constructor så ska listan colorPanels initialiseras.
 	 */
 	public ColorPalettePanel() {
-		// TODO
+		colorPanels = new ArrayList<>();
+		layout = new GridLayout();
+		this.setLayout(layout);
 	}
 	
 	/*
@@ -39,7 +46,13 @@ public class ColorPalettePanel extends JPanel {
 	 * denna klass (så att de blir synliga).
 	 */
 	public ColorPalettePanel(ArrayList<ColorPanel> colorPanels) {
-		// TODO
+		this.colorPanels = colorPanels;
+		layout = new GridLayout();
+        this.setLayout(layout);
+		for (var cp : colorPanels) {
+			addColorPanel(cp);
+		}
+
 	}
 
 	/*
@@ -53,7 +66,8 @@ public class ColorPalettePanel extends JPanel {
 	 * (så att de blir synliga).
 	 */
 	public void addColorPanel(ColorPanel cp) {
-		// TODO
+		colorPanels.add(cp);
+		this.add(cp);
 	}
 
 	/*
@@ -65,7 +79,9 @@ public class ColorPalettePanel extends JPanel {
 	 * samtliga ColorPanel-objekt som finns i listan.
 	 */
 	public void setMouseListenerForColorPanels(MouseListener listener) {
-		// TODO
+		for (var cp : colorPanels) {
+			cp.addMouseListener(listener);
+		}
 	}
 
 }

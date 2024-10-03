@@ -31,13 +31,12 @@ public class JPaintFrame extends JFrame {
 		// 1. Sätt storleken på JFrame till vad ni nu känner för.
 		// TODO
 
-		this.getContentPane().setSize(800, 400);
+		this.setSize(800, 400);
 
 		// 2. Se till att programmet stängs ner när man trycker på krysset upp i högra
 		// hörnet.
 		// TODO
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 		/*
 		 * 3. Välj ikon för programmet. Ni kan skapa en mapp som heter "img" i
@@ -45,7 +44,7 @@ public class JPaintFrame extends JFrame {
 		 */
 		// TODO
 		ImageIcon icon = new ImageIcon("img/icon.png");
-
+		JPaintFrame.this.setIconImage(icon.getImage());
 
 		/*
 		 * 4. Initialisera strängen "header" med något värde ("JPaint" exempelvis), och
@@ -54,16 +53,13 @@ public class JPaintFrame extends JFrame {
 		 */
 		// TODO
 		header = "JPaint";
-		this.setTitle(header);
+		JPaintFrame.this.setTitle(header);
 
-
-
-		
 		/*
 		 * 5. Sätt layout för denna klass till BorderLayout
 		 */
 		// TODO
-		this.setLayout(new BorderLayout());
+		JPaintFrame.this.setLayout(new BorderLayout());
 
 		/*
 		 * 6. Följande kod skapar en JPanel där vi sätter en önskad storlek på höjden
@@ -84,77 +80,110 @@ public class JPaintFrame extends JFrame {
 		 * Alternativ så anropar du ColorPalettePanel(ArrayList<ColorPanel>) och då
 		 * sköter ColorPalettePanel resten
 		 */
-		
-		// TODO
-		
-		
 
+		// TODO
+		ArrayList<ColorPanel> colorPanels = new ArrayList<>();
+		colorPalettePanel = new ColorPalettePanel(colorPanels);
+
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.RED));
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.GREEN));
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.BLUE));
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.YELLOW));
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.PINK));
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.CYAN));
+		colorPalettePanel.addColorPanel(new ColorPanel(Color.MAGENTA));
+
+		
 		/*
 		 * 8.
-		 * 8.1 Skapa en String[] som håller "Rectangle" och "Circle" 
-		 * 8.2 Skapa en JComboBox<String> och initalisera den med arrayen. 
+		 * 8.1 Skapa en String[] som håller "Rectangle" och "Circle"
+		 * 8.2 Skapa en JComboBox<String> och initalisera den med arrayen.
 		 * 8.3 Välj vilken form som ska vara default.
 		 * 
 		 * Våran JComboBox kommer vara bunden till den höjd som anges av topPanel.
 		 * Däremot så har vi här möjlighet att ange bredd. Sätt bredden till något
 		 * rimligt, exempelvis 100.
 		 */
-		
-		// TODO
 
+		// TODO
+		String[] shapes = { "Rectangle", "Circle" };
+		JComboBox<String> shapeComboBox = new JComboBox<>(shapes);
+		shapeComboBox.setPreferredSize(new Dimension(100, 50));
 
 		/*
 		 * 9.
 		 * 9.1 Initialisera DrawingPanel
 		 * 9.2 Deklarera en CustomMouseAdapter och initialisera den.
 		 * 9.3 Lägg till denna CustomMouseAdapter som MouseListener till drawingPanel
-		 * 9.4 Lägg även till CustomMouseAdapter som MouseMotionListener till drawingPanel
+		 * 9.4 Lägg även till CustomMouseAdapter som MouseMotionListener till
+		 * drawingPanel
 		 */
 		// TODO
+		drawingPanel = new DrawingPanel();
+		CustomMouseAdapter customMouseAdapter = new CustomMouseAdapter();
+		drawingPanel.addMouseListener(customMouseAdapter);
+		drawingPanel.addMouseMotionListener(customMouseAdapter);
 
-		
 		/*
 		 * 10.
 		 * 10.1 Initialisera StatusBarPanel
 		 * 10.2 Sätt en rimlig höjd på StatusBarPanel, exempelvis 25.
 		 */
 		// TODO
-		
+		statusBarPanel = new StatusBarPanel();
+		statusBarPanel.setPreferredSize(new Dimension(0, 25));
 
 		/*
 		 * 11. Nu när StatusBarPanel väl är initialiserad så kan vi
-		 * sätta en MouseListener för våra ColorPanel's. Eftersom vi inte har gått igenom
-		 * anonyma klasser än, och eftersom det enkaste sättet att uträtta detta är genom en
-		 * anonym klass, så följer den med här. 
+		 * sätta en MouseListener för våra ColorPanel's. Eftersom vi inte har gått
+		 * igenom
+		 * anonyma klasser än, och eftersom det enkaste sättet att uträtta detta är
+		 * genom en
+		 * anonym klass, så följer den med här.
 		 * Ni måste fortfarande implementera mousePressed dock.
-		 * Det vi vill ska hända är att när ett objekt klickas på, så ska dess bakgrundsfärg skickas
+		 * Det vi vill ska hända är att när ett objekt klickas på, så ska dess
+		 * bakgrundsfärg skickas
 		 * som argument till StatusBarPanel.updateSelectedColor(Color color).
-		 * Vi kommer behöva anropa MouseEvent.getSource() (i ren syntax innebär det alltså "e.getSource()".
-		 * MouseEvent.getSource() returnerar ett Object. Vi kan inte få reda på bakgrundsfärgen bara genom 
-		 * ett Object. Så vi måste "casta" det Object som returneras från getSource() till en ColorPanel.
+		 * Vi kommer behöva anropa MouseEvent.getSource() (i ren syntax innebär det
+		 * alltså "e.getSource()".
+		 * MouseEvent.getSource() returnerar ett Object. Vi kan inte få reda på
+		 * bakgrundsfärgen bara genom
+		 * ett Object. Så vi måste "casta" det Object som returneras från getSource()
+		 * till en ColorPanel.
 		 * 
 		 * 
-		 * */
+		 */
 		colorPalettePanel.setMouseListenerForColorPanels(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO
+				ColorPanel cp = (ColorPanel) e.getSource();
+				statusBarPanel.updateSelectedColor(cp.getColor());
+
 			}
 		});
 
 		/*
 		 * 12.
 		 * 12.1 Sätt layouten för topPanel till BorderLayout.
-		 * 12.2 "adda" colorPalettePanel med lämplig constraint (dvs BorderLayout.LÄMPLIG_CONSTRAINT)
-		 * 12.3 "adda" din JComboBox med lämplig constraint (dvs BorderLayout.LÄMPLIG_CONSTRAINT)
+		 * 12.2 "adda" colorPalettePanel med lämplig constraint (dvs
+		 * BorderLayout.LÄMPLIG_CONSTRAINT)
+		 * 12.3 "adda" din JComboBox med lämplig constraint (dvs
+		 * BorderLayout.LÄMPLIG_CONSTRAINT)
 		 */
 		// TODO
-		
+		topPanel.setLayout(new BorderLayout());
+		topPanel.add(colorPalettePanel, BorderLayout.CENTER);
+		topPanel.add(shapeComboBox, BorderLayout.EAST);
+
 		/*
-		 * 13. Avslutningsvis, lägg till topPanel, drawingPanel och statusBarPanel till 
+		 * 13. Avslutningsvis, lägg till topPanel, drawingPanel och statusBarPanel till
 		 * Container c.
 		 */
 		// TODO
+		c.add(topPanel, BorderLayout.NORTH);
+		c.add(drawingPanel, BorderLayout.CENTER);
+		c.add(statusBarPanel, BorderLayout.SOUTH);
 
 	}
 
@@ -163,20 +192,24 @@ public class JPaintFrame extends JFrame {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (((Component) e.getSource()).getMousePosition() != null) {
-				//  Uppdatera koordinater i statusBarPanel
+				// Uppdatera koordinater i statusBarPanel
+				statusBarPanel.updateCoordinates(e.getX(), e.getY());
 			} else {
 				// Nollställ koordinater i statusBarPanel
+				statusBarPanel.updateCoordinates(0, 0);
 			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// Nollställ koordinater i statusBarPanel
+			statusBarPanel.updateCoordinates(0, 0);
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			// Uppdatera koordinater i statusBarPanel
+			statusBarPanel.updateCoordinates(e.getX(), e.getY());
 		}
 	}
 
