@@ -81,7 +81,15 @@ public class Menu extends JMenuBar {
 	 */
 	public void addSubJMenu(String parentName, String subMenuName) {
 		// TODO
+		JComponent parentComponent = getComponentByName(parentName);
 		
+		if (parentComponent instanceof JMenu) {
+			JMenu parentMenu = (JMenu) parentComponent;
+			JMenu subMenu = new JMenu(subMenuName);
+			parentMenu.add(subMenu);
+		} else {
+			System.out.println("Parent menu not found: " + parentName);
+		}
 	}
 
 	/*
@@ -90,13 +98,13 @@ public class Menu extends JMenuBar {
 	 */
 	public JMenu getJMenu(int index) {
 		// TODO
-		return null;
+		return this.getMenu(index);
 	}
 
 
 	/*
 	 * Denna metod kommer returnera en komponent som har lagts till
-	 * i våran Menu-klass, oavsett om komponenten är en JMenu eller ett JMenuItem,
+	 * i våran Menu-klass, oavsett om komponenten är en JMenu eller ett JMenuItem, bög
 	 * Vi är alltså ute efter komponenter utifrån "namn".
 	 * Med namn så menar vi i det här fallet vad JMenu- och JMenuItem-objekt
 	 * heter i vårat GUI, såsom "File", "Load...", "Drawing" osv.
@@ -105,26 +113,15 @@ public class Menu extends JMenuBar {
 	 * visar, så är JMenu en mer specificerad klass än JMenuItem.
 	 */
 	private JComponent getComponentByName(String name) {
-		/*
-		 * 1. JMenuBar ärver från 
-		 * javax.swing.JComponent, som ärver från
-		 * java.awt.Container, som ärver från
-		 * java.awt.Component, som ärver från
-		 * java.lang.Object.
-		 * 
-		 * ¯\_(ツ)_/¯
-		 *  
-		 * Tack vare java.awt.Container så ärver JMenuBar metoden getComponents().
-		 * getComponents() returnerar en array med samtliga barn-komponenter (Component).
-		 * Använd en for-each loop för att loopa över våran Menu-klass samtliga barn-komponenter.
-		 */
-
-		 for (Component component : this.getComponents()) {
+		// Loopa alla "övre" komponenter i JMenu
+		for (Component component : this.getComponents()) {
 			if (component instanceof JMenu) {
 				JMenu menu = (JMenu) component;
+				// If namnet på JMenu-objektet matchar, returnera det
 				if (menu.getText().equals(name)) {
 					return menu;
 				}
+				// Kolla efter matchande JMenuItem-objekt
 				for (Component subComponent : menu.getMenuComponents()) {
 					if (subComponent instanceof JMenuItem) {
 						JMenuItem menuItem = (JMenuItem) subComponent;
@@ -133,8 +130,9 @@ public class Menu extends JMenuBar {
 						}
 					}
 				}
-			}		
+			}
 		}
+		// If no matching component is found, return null
 		return null;
 		// TODO
 

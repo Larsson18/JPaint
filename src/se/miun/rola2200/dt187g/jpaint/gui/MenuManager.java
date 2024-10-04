@@ -3,7 +3,11 @@ package se.miun.rola2200.dt187g.jpaint.gui;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
+
+import se.miun.rola2200.dt187g.jpaint.Drawable;
+import se.miun.rola2200.dt187g.jpaint.Drawing;
 
 /**
  * <h1>MenuManager</h1>
@@ -17,6 +21,8 @@ public class MenuManager {
     private DrawingPanel drawingPanel;
     private Menu menu;
     
+	//?????
+	
 
     public MenuManager(JPaintFrame frame, DrawingPanel drawingPanel) {
         this.frame = frame;
@@ -79,6 +85,7 @@ public class MenuManager {
     
     private void createFilterMenu() {
 		// TODO for assignment 6
+
 	}
     
     /*
@@ -101,12 +108,21 @@ public class MenuManager {
 
     private ActionListener createChangeNameAction() {
 		return al -> {
+
+			String name = JOptionPane.showInputDialog(frame, "Enter new name");
+			if (name != null) {
+				frame.setTitle("JPaint - " + name);
+			}
 			// TODO for assignment 4
 		};
 	}
 
 	private ActionListener createChangeAuthorAction() {
 		return al -> {
+			String author = JOptionPane.showInputDialog(frame, "Enter new author");
+			if (author != null) {
+				frame.setTitle("JPaint - " + author);
+				}
 			// TODO for assignment 4
 		};
 	}

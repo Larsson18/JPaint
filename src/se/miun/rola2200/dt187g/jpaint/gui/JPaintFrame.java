@@ -21,6 +21,7 @@ public class JPaintFrame extends JFrame {
 	private StatusBarPanel statusBarPanel;
 	private DrawingPanel drawingPanel;
 	private ColorPalettePanel colorPalettePanel;
+	private MenuManager menuManager;
 
 	public JPaintFrame() {
 		init();
@@ -185,6 +186,8 @@ public class JPaintFrame extends JFrame {
 		c.add(drawingPanel, BorderLayout.CENTER);
 		c.add(statusBarPanel, BorderLayout.SOUTH);
 
+		menuManager = new MenuManager(this, drawingPanel);
+		this.setJMenuBar(menuManager.getMenu());
 	}
 
 	class CustomMouseAdapter extends MouseAdapter {
