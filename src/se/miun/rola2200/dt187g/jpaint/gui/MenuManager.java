@@ -104,12 +104,19 @@ public class MenuManager {
 
     private ActionListener createChangeNameAction() {
 		return al -> {
+			String name = JOptionPane.showInputDialog(frame, "Enter new name");
+			if (name != null) {
+				frame.setTitle("JPaint - " + name);
+			}
 			// TODO for assignment 4
 		};
 	}
 
 	private ActionListener createChangeAuthorAction() {
 		return al -> {
+			String author = JOptionPane.showInputDialog(frame, "Enter new author");
+			if (author != null) {
+				}
 			// TODO for assignment 4
 		};
 	}
