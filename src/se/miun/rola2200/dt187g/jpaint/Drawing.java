@@ -34,16 +34,28 @@ public class Drawing implements Drawable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name) throws DrawingException {
+        if (name == null) {
+            throw new DrawingException("Name", true);
+        } else if (name.trim().isEmpty()) {
+            throw new DrawingException("Name", false);
+        } else {
+            this.name = name;
+        }
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(String author) throws DrawingException {
+        if (author == null) {
+            throw new DrawingException("Author", true);
+        } else if (author.trim().isEmpty()) {
+            throw new DrawingException("Author", false);
+        } else {
+            this.author = author;
+        }
     }
 
     public void addShape(Shape shape) {

@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+
 public class JPaintFrame extends JFrame {
 
 	private String header;
@@ -22,9 +23,27 @@ public class JPaintFrame extends JFrame {
 	private DrawingPanel drawingPanel;
 	private ColorPalettePanel colorPalettePanel;
 	private MenuManager menuManager;
+	private String drawingTitle;
 
 	public JPaintFrame() {
 		init();
+	}
+
+	public void updateHeader(){
+		this.setTitle("JPaint" + " - " + drawingTitle);
+	}
+
+	public void setDrawingTitle(String name, String author) {
+		if (author != null && !author.isEmpty()) {
+			drawingTitle = name + " by " + author;
+		} else {
+			drawingTitle = name;
+		}
+		updateHeader();
+	}
+
+	public void getDrawingTitle() {
+		drawingTitle = drawingPanel.getDrawing().getName() + " by " + drawingPanel.getDrawing().getAuthor();
 	}
 
 	private void init() {
@@ -189,6 +208,8 @@ public class JPaintFrame extends JFrame {
 		menuManager = new MenuManager(this, drawingPanel);
 		this.setJMenuBar(menuManager.getMenu());
 	}
+
+	
 
 	class CustomMouseAdapter extends MouseAdapter {
 

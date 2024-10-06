@@ -8,6 +8,7 @@ import javax.swing.KeyStroke;
 
 import se.miun.rola2200.dt187g.jpaint.Drawable;
 import se.miun.rola2200.dt187g.jpaint.Drawing;
+import se.miun.rola2200.dt187g.jpaint.DrawingException;
 
 /**
  * <h1>MenuManager</h1>
@@ -17,31 +18,28 @@ import se.miun.rola2200.dt187g.jpaint.Drawing;
  * @since YYYY-MM-DD
  */
 public class MenuManager {
-    private JPaintFrame frame;
-    private DrawingPanel drawingPanel;
-    private Menu menu;
-    
-	//?????
-	
+	private JPaintFrame frame;
+	private DrawingPanel drawingPanel;
+	private Menu menu;
 
-    public MenuManager(JPaintFrame frame, DrawingPanel drawingPanel) {
-        this.frame = frame;
-        this.drawingPanel = drawingPanel;
-        this.menu = new Menu();
-        createMenu();
-    }
-    
-    public Menu getMenu() {
-        return menu;
-    }
+	public MenuManager(JPaintFrame frame, DrawingPanel drawingPanel) {
+		this.frame = frame;
+		this.drawingPanel = drawingPanel;
+		this.menu = new Menu();
+		createMenu();
+	}
 
-    private void createMenu() {
-        createFileMenu();
-        createEditMenu();
-        createFilterMenu(); // Empty for now
-    }
+	public Menu getMenu() {
+		return menu;
+	}
 
-    private void createFileMenu() {
+	private void createMenu() {
+		createFileMenu();
+		createEditMenu();
+		createFilterMenu(); // Empty for now
+	}
+
+	private void createFileMenu() {
 		String sFile = "File";
 		menu.addJMenu(sFile);
 		menu.getJMenu(0).setMnemonic(KeyEvent.VK_F);
@@ -59,7 +57,7 @@ public class MenuManager {
 
 	}
 
-    private void createEditMenu() {
+	private void createEditMenu() {
 		String sEdit = "Edit";
 		String sDrawing = "Drawing";
 		menu.addJMenu(sEdit);
@@ -71,10 +69,11 @@ public class MenuManager {
 		menu.addJMenuItem(sDrawing, "Name...", createChangeNameAction());
 		menu.addJMenuItem(sDrawing, "Author...", createChangeAuthorAction());
 
-		/* Denna rad, som du inte får ta bort, kommer skapa ett NullException.
+		/*
+		 * Denna rad, som du inte får ta bort, kommer skapa ett NullException.
 		 * Du måste hantera denna situation i Menu-klassen. I vanliga fall
-		 * hade det varit rimligt att ett Exception kastades (klienten bör 
-		 * i vanliga fall göras medveten om att den försöker skapa ett 
+		 * hade det varit rimligt att ett Exception kastades (klienten bör
+		 * i vanliga fall göras medveten om att den försöker skapa ett
 		 * JMenuItem till en JMenu som inte existerar), men nu räcker
 		 * det med att ingenting alls händer i det läget man anropar
 		 * addJMenuItem med en sträng som inte kan hittas.
@@ -82,36 +81,62 @@ public class MenuManager {
 		menu.addJMenuItem("This JMenu doesn't exist", "abc");
 
 	}
-    
-    private void createFilterMenu() {
+
+	private void createFilterMenu() {
 		// TODO for assignment 6
 
 	}
-    
-    /*
-     * Flera av metoderna nedan kommer anropa JOptionPane.showInputDialog(...).
-     * Denna metod returnerar en String. Tänk på att om användaren trycker på
-     * "Cancel" så kommer null att returneras. När en användare trycker på "Cancel"
-     * så ska givetvis ingenting alls hända; inget felmeddelande till användaren,
-     * inget ändring av det grafiska gränssnittets tillstånd (en teckning ska
-     * inte plötsligt få namnet "null"). Jag har sett många inlämningar där
-     * "Cancel" har hanterats på tämligen oväntade sätt. Så håll det i åtanke,
-     * att Cancel/Avbryt innebär just den saken.
-     * 
-     */
-    
-    private ActionListener createNewDrawingAction() {
+
+	/*
+	 * Flera av metoderna nedan kommer anropa JOptionPane.showInputDialog(...).
+	 * Denna metod returnerar en String. Tänk på att om användaren trycker på
+	 * "Cancel" så kommer null att returneras. När en användare trycker på "Cancel"
+	 * så ska givetvis ingenting alls hända; inget felmeddelande till användaren,
+	 * inget ändring av det grafiska gränssnittets tillstånd (en teckning ska
+	 * inte plötsligt få namnet "null"). Jag har sett många inlämningar där
+	 * "Cancel" har hanterats på tämligen oväntade sätt. Så håll det i åtanke,
+	 * att Cancel/Avbryt innebär just den saken.
+	 * 
+	 */
+
+	 private ActionListener createNewDrawingAction() {
 		return al -> {
-			// TODO for assignment 4
+			String name = JOptionPane.showInputDialog(frame, "Enter new drawing name:");
+			String author = JOptionPane.showInputDialog(frame, "Enter author's name:");
+	
+			try {
+				if ((name == null || name.isEmpty()) && (author == null || author.isEmpty())) {
+					throw new DrawingException("name and author can't be null or empty");
+				}              
+	
+				Drawing newDrawing = new Drawing(name, author); 
+				drawingPanel.setDrawing(newDrawing);
+				frame.setDrawingTitle(newDrawing.getName(), newDrawing.getAuthor());
+			} catch (DrawingException e) {
+				JOptionPane.showMessageDialog(frame, e.getMessage(), "JPaint", JOptionPane.ERROR_MESSAGE);
+			}     
 		};
 	}
 
-    private ActionListener createChangeNameAction() {
+	private ActionListener createChangeNameAction() {
 		return al -> {
 
-			String name = JOptionPane.showInputDialog(frame, "Enter new name");
+			String name = JOptionPane.showInputDialog(frame, "Enter new drawing name:");
 			if (name != null) {
-				frame.setTitle("JPaint - " + name);
+				// nuvarande drawing
+				Drawing drawing = drawingPanel.getDrawing();
+
+				// ny drawing tjosan
+				if (drawing == null) {
+					drawing = new Drawing("[untitled drawing]", "Unknown");
+					drawingPanel.setDrawing(drawing);
+				}
+				 try {
+                drawing.setName(name);
+                frame.setDrawingTitle(drawing.getName(), drawing.getAuthor());
+            } catch (DrawingException e) {
+                JOptionPane.showMessageDialog(frame, e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+            }
 			}
 			// TODO for assignment 4
 		};
@@ -119,10 +144,21 @@ public class MenuManager {
 
 	private ActionListener createChangeAuthorAction() {
 		return al -> {
-			String author = JOptionPane.showInputDialog(frame, "Enter new author");
+			String author = JOptionPane.showInputDialog(frame, "Enter new author name:");
 			if (author != null) {
-				frame.setTitle("JPaint - " + author);
+				Drawing drawing = drawingPanel.getDrawing();
+
+				if (drawing == null) {
+					drawing = new Drawing("[untitled drawing]", "Unknown");
+					drawingPanel.setDrawing(drawing);
 				}
+				try {
+					drawing.setAuthor(author);
+					frame.setDrawingTitle(drawing.getName(), drawing.getAuthor());
+				} catch (DrawingException e) {
+					JOptionPane.showMessageDialog(frame, e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 			// TODO for assignment 4
 		};
 	}
@@ -132,7 +168,7 @@ public class MenuManager {
 			// TODO for assignment 5
 		};
 	}
-	
+
 	private ActionListener showInfoAction() {
 		return al -> {
 			// TODO for assignment 5
@@ -151,6 +187,4 @@ public class MenuManager {
 		};
 	}
 
-
-    
 }

@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
+import se.miun.rola2200.dt187g.jpaint.Drawing;
+
 public class DrawingPanel extends JPanel {
+
+	private Drawing drawing;
 	
 
 	/*
@@ -19,6 +23,14 @@ public class DrawingPanel extends JPanel {
 	
 	public DrawingPanel(Color background) {
 		setBackground(background);
+	}
+
+	public void setDrawing(Drawing drawing) {
+		this.drawing = drawing;
+	}
+
+	public Drawing getDrawing() {
+		return this.drawing;
 	}
 	
 }
