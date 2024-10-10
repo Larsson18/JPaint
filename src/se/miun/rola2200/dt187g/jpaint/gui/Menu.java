@@ -22,8 +22,6 @@ public class Menu extends JMenuBar {
 	 * sätt som man lägger till en JMenu till en JMenuBar
 	 */
 	public void addJMenu(String name) {
-		// TODO
-
 		JMenu menu = new JMenu(name);
 		this.add(menu);
 	}
@@ -34,8 +32,6 @@ public class Menu extends JMenuBar {
 	 * Tänk på att metoden getComponentByName kan returnera null!
 	 */
 	public void addJMenuItem(String parentName, String itemName) {
-		// TODO
-
 		JComponent component = getComponentByName(parentName);
 		if (component != null) {
 			JMenuItem menuItem = new JMenuItem(itemName);
@@ -49,7 +45,6 @@ public class Menu extends JMenuBar {
 	 * ActionListener ska helt enkelt "addas" till det JMenuItem vi skapar.
 	 */
 	public void addJMenuItem(String parentName, String itemName, ActionListener al) {
-		// TODO
 		JComponent component = getComponentByName(parentName);
 		if (component instanceof JMenu) {
 			JMenuItem menuItem = new JMenuItem(itemName);
@@ -63,7 +58,6 @@ public class Menu extends JMenuBar {
 	 * metoden setAccelerator(KeyStroke keyStroke).
 	 */
 	public void addJMenuItem(String parentName, String itemName, ActionListener al, KeyStroke keyStroke) {
-		// TODO
 		JComponent component = getComponentByName(parentName);
 		if (component instanceof JMenu) {
 			JMenuItem menuItem = new JMenuItem(itemName);
@@ -80,7 +74,6 @@ public class Menu extends JMenuBar {
 	 * tillhöra.
 	 */
 	public void addSubJMenu(String parentName, String subMenuName) {
-		// TODO
 		JComponent parentComponent = getComponentByName(parentName);
 		
 		if (parentComponent instanceof JMenu) {
@@ -97,7 +90,6 @@ public class Menu extends JMenuBar {
 	 * för att hitta lämplig metod
 	 */
 	public JMenu getJMenu(int index) {
-		// TODO
 		return this.getMenu(index);
 	}
 
@@ -134,7 +126,6 @@ public class Menu extends JMenuBar {
 		}
 		// If no matching component is found, return null
 		return null;
-		// TODO
 
 		/*
 		 * 2. Vi är egentligen säkra på att alla "närmaste" barn-komponenter till våran Menu-klass
@@ -142,7 +133,6 @@ public class Menu extends JMenuBar {
 		 * till ett JMenu-objekt. (egentligen kan vi casta till JMenuItem också. Hur kommer det sig tror du?)
 		 */
 		
-		// TODO
 
 		/*
 		 * 3. Varför vill vi casta till ett JMenu-objekt? Jo, för att kunna anropa metoden
@@ -151,7 +141,6 @@ public class Menu extends JMenuBar {
 		 * likhetsoperatorn (==) när du kollar efter att texten är densamma.
 		 */
 		
-		// TODO
 		
 		/*
 		 * 4. Ok, med den kod som skrivits fram till nu så kan vi hitta alla JMenu-objekt som är
@@ -162,7 +151,6 @@ public class Menu extends JMenuBar {
 		 * ske inuti den befintliga loopen.
 		 */
 		
-		// TODO
 
 
 		/*
@@ -181,20 +169,17 @@ public class Menu extends JMenuBar {
 		 * så räcker det med att vi kollar om det rör sig om ett JMenuItem.
 		 */
 		
-		// TODO
 		
 		/*
 		 * 6. Om det objekt som passerar genom loopen är ett JMenuItem, så är det bara
 		 * att casta objektet och returnera det om den har samma text som parametern. 
 		 */
 		
-		// TODO
 		
 		/*
 		 * 7. Om inga av dessa vilkor har kunna uppfyllas, då måste metoden returnera null.
 		 */
 
-		// TODO ...eller vänta, den bjuder jag på ;-)
 	}
 
 }

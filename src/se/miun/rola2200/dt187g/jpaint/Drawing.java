@@ -24,7 +24,10 @@ public class Drawing implements Drawable {
         shapes = new ArrayList<>();
     }
 
-    public Drawing(String name, String author) {
+    public Drawing(String name, String author) throws DrawingException {
+        if (name == null || name.isEmpty() || author == null || author.isEmpty()) {
+            throw new DrawingException("name and author can't be null or empty");
+        }
         this.name = name;
         this.author = author;
         this.shapes = new ArrayList<>();
@@ -95,6 +98,10 @@ public class Drawing implements Drawable {
         return totalArea;
     }
 
+    public void removeShape(int Index) {
+		shapes.remove(Index); 
+	}
+
     public void draw() {
         System.out.println("A drawing by " + author + " called " + name);
         for (Shape shape : shapes) {
@@ -102,8 +109,11 @@ public class Drawing implements Drawable {
         }
     }
 
+    @Override
     public void draw(java.awt.Graphics g) {
-
+        for (Shape shape : shapes) {
+            shape.draw();
+        }
     }
 
     @Override

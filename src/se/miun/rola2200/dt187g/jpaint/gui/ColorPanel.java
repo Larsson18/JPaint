@@ -13,7 +13,6 @@ public class ColorPanel extends JPanel {
 	 *  Color-objekt som skickas som argument.
 	 */
 	public ColorPanel(Color color) {
-		// TODO
 		this.setBackground(color);
 		this.setPreferredSize(new java.awt.Dimension(50, 50));
 	}
@@ -22,7 +21,6 @@ public class ColorPanel extends JPanel {
 	 * Returnera bakgrunden för detta objekt.
 	 */
 	public Color getColor() {
-		// TODO
 		return this.getBackground();
 	}
 	

@@ -49,20 +49,17 @@ public class JPaintFrame extends JFrame {
 	private void init() {
 
 		// 1. Sätt storleken på JFrame till vad ni nu känner för.
-		// TODO
 
-		this.setSize(800, 400);
+		this.setSize(800, 600);
 
 		// 2. Se till att programmet stängs ner när man trycker på krysset upp i högra
 		// hörnet.
-		// TODO
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		/*
 		 * 3. Välj ikon för programmet. Ni kan skapa en mapp som heter "img" i
 		 * root-katalogen och hänvisa till den genom "img/filenameOfYourIcon.png".
 		 */
-		// TODO
 		ImageIcon icon = new ImageIcon("img/icon.png");
 		JPaintFrame.this.setIconImage(icon.getImage());
 
@@ -71,14 +68,12 @@ public class JPaintFrame extends JFrame {
 		 * sätt detta som title för programmet. Att vi lagrar vårat applikationsnamn i
 		 * en String kommer bli tydligare till kommande uppgifter.
 		 */
-		// TODO
 		header = "JPaint";
 		JPaintFrame.this.setTitle(header);
 
 		/*
 		 * 5. Sätt layout för denna klass till BorderLayout
 		 */
-		// TODO
 		JPaintFrame.this.setLayout(new BorderLayout());
 
 		/*
@@ -101,7 +96,6 @@ public class JPaintFrame extends JFrame {
 		 * sköter ColorPalettePanel resten
 		 */
 
-		// TODO
 		ArrayList<ColorPanel> colorPanels = new ArrayList<>();
 		colorPalettePanel = new ColorPalettePanel(colorPanels);
 
@@ -125,7 +119,6 @@ public class JPaintFrame extends JFrame {
 		 * rimligt, exempelvis 100.
 		 */
 
-		// TODO
 		String[] shapes = { "Rectangle", "Circle" };
 		JComboBox<String> shapeComboBox = new JComboBox<>(shapes);
 		shapeComboBox.setPreferredSize(new Dimension(100, 50));
@@ -138,7 +131,6 @@ public class JPaintFrame extends JFrame {
 		 * 9.4 Lägg även till CustomMouseAdapter som MouseMotionListener till
 		 * drawingPanel
 		 */
-		// TODO
 		drawingPanel = new DrawingPanel();
 		CustomMouseAdapter customMouseAdapter = new CustomMouseAdapter();
 		drawingPanel.addMouseListener(customMouseAdapter);
@@ -149,7 +141,6 @@ public class JPaintFrame extends JFrame {
 		 * 10.1 Initialisera StatusBarPanel
 		 * 10.2 Sätt en rimlig höjd på StatusBarPanel, exempelvis 25.
 		 */
-		// TODO
 		statusBarPanel = new StatusBarPanel();
 		statusBarPanel.setPreferredSize(new Dimension(0, 25));
 
@@ -176,7 +167,6 @@ public class JPaintFrame extends JFrame {
 		colorPalettePanel.setMouseListenerForColorPanels(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO
 				ColorPanel cp = (ColorPanel) e.getSource();
 				statusBarPanel.updateSelectedColor(cp.getColor());
 
@@ -191,7 +181,6 @@ public class JPaintFrame extends JFrame {
 		 * 12.3 "adda" din JComboBox med lämplig constraint (dvs
 		 * BorderLayout.LÄMPLIG_CONSTRAINT)
 		 */
-		// TODO
 		topPanel.setLayout(new BorderLayout());
 		topPanel.add(colorPalettePanel, BorderLayout.CENTER);
 		topPanel.add(shapeComboBox, BorderLayout.EAST);
@@ -200,7 +189,6 @@ public class JPaintFrame extends JFrame {
 		 * 13. Avslutningsvis, lägg till topPanel, drawingPanel och statusBarPanel till
 		 * Container c.
 		 */
-		// TODO
 		c.add(topPanel, BorderLayout.NORTH);
 		c.add(drawingPanel, BorderLayout.CENTER);
 		c.add(statusBarPanel, BorderLayout.SOUTH);
@@ -234,6 +222,17 @@ public class JPaintFrame extends JFrame {
 		public void mouseMoved(MouseEvent e) {
 			// Uppdatera koordinater i statusBarPanel
 			statusBarPanel.updateCoordinates(e.getX(), e.getY());
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			drawingPanel.setDrawIsActive(true);
+			statusBarPanel.updateCoordinates(e.getX(), e.getY());
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			statusBarPanel.updateCoordinates(0, 0);
 		}
 	}
 

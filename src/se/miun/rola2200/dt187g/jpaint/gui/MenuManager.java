@@ -36,7 +36,7 @@ public class MenuManager {
 	private void createMenu() {
 		createFileMenu();
 		createEditMenu();
-		createFilterMenu(); // Empty for now
+		createFilterMenu(); 
 	}
 
 	private void createFileMenu() {
@@ -99,46 +99,44 @@ public class MenuManager {
 	 * 
 	 */
 
-	 private ActionListener createNewDrawingAction() {
+	private ActionListener createNewDrawingAction() {
 		return al -> {
 			String name = JOptionPane.showInputDialog(frame, "Enter new drawing name:");
+			if (name == null)
+				return;
+
 			String author = JOptionPane.showInputDialog(frame, "Enter author's name:");
-	
+			if (author == null)
+				return;
+
 			try {
-				if ((name == null || name.isEmpty()) && (author == null || author.isEmpty())) {
-					throw new DrawingException("name and author can't be null or empty");
-				}              
-	
-				Drawing newDrawing = new Drawing(name, author); 
+				Drawing newDrawing = new Drawing(name, author);
 				drawingPanel.setDrawing(newDrawing);
 				frame.setDrawingTitle(newDrawing.getName(), newDrawing.getAuthor());
 			} catch (DrawingException e) {
 				JOptionPane.showMessageDialog(frame, e.getMessage(), "JPaint", JOptionPane.ERROR_MESSAGE);
-			}     
+			}
 		};
 	}
 
 	private ActionListener createChangeNameAction() {
 		return al -> {
-
 			String name = JOptionPane.showInputDialog(frame, "Enter new drawing name:");
 			if (name != null) {
-				// nuvarande drawing
 				Drawing drawing = drawingPanel.getDrawing();
 
 				// ny drawing tjosan
 				if (drawing == null) {
-					drawing = new Drawing("[untitled drawing]", "Unknown");
+					drawing = new Drawing();
 					drawingPanel.setDrawing(drawing);
 				}
-				 try {
-                drawing.setName(name);
-                frame.setDrawingTitle(drawing.getName(), drawing.getAuthor());
-            } catch (DrawingException e) {
-                JOptionPane.showMessageDialog(frame, e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
-            }
+				try {
+					drawing.setName(name);
+					frame.setDrawingTitle(drawing.getName(), drawing.getAuthor());
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(frame, e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			// TODO for assignment 4
 		};
 	}
 
@@ -149,7 +147,7 @@ public class MenuManager {
 				Drawing drawing = drawingPanel.getDrawing();
 
 				if (drawing == null) {
-					drawing = new Drawing("[untitled drawing]", "Unknown");
+					drawing = new Drawing();
 					drawingPanel.setDrawing(drawing);
 				}
 				try {
@@ -159,7 +157,6 @@ public class MenuManager {
 					JOptionPane.showMessageDialog(frame, e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			// TODO for assignment 4
 		};
 	}
 
