@@ -112,7 +112,7 @@ public class Drawing implements Drawable {
     @Override
     public void draw(java.awt.Graphics g) {
         for (Shape shape : shapes) {
-            shape.draw();
+            shape.draw(g);
         }
     }
 

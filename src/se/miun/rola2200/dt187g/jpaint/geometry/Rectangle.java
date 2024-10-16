@@ -1,4 +1,5 @@
 package se.miun.rola2200.dt187g.jpaint.geometry;
+import java.awt.*;
 
 /**
  * A class representing a rectangle, defined by a starting point
@@ -56,8 +57,12 @@ public class Rectangle extends Shape {
 
     @Override
     public void draw(java.awt.Graphics g) {
+        Graphics2D graphics = (Graphics2D) g;
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-    }
+        graphics.setColor(Color.decode(getColor()));
+        graphics.fillRect((int) points.get(0).getX(), (int) points.get(0).getY(), (int) getWidth(), (int) getHeight());}
+    
 
     @Override
     public void addPoint(Point p) {
