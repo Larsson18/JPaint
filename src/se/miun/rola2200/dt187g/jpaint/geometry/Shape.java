@@ -32,6 +32,10 @@ public abstract class Shape implements Drawable {
         return color;
     }
 
+    public ArrayList<Point> getPoints() {
+        return points;
+    }
+
     public abstract double getCircumference();
 
     public abstract double getArea();
