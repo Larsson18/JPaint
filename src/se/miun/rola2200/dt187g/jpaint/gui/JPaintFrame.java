@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
@@ -25,8 +27,18 @@ public class JPaintFrame extends JFrame {
 	private MenuManager menuManager;
 	private String drawingTitle;
 
+
 	public JPaintFrame() {
 		init();
+
+		OnChangeListener<StatusBarPanel> listener = new OnChangeListener<StatusBarPanel>() {
+            @Override
+            public void onChange(StatusBarPanel object) {
+                drawingPanel.setDrawColor(object.getSelectedColor());
+            }
+        };
+        
+        statusBarPanel.setOnChangeListener(listener);
 	}
 
 	public void updateHeader(){
@@ -121,7 +133,17 @@ public class JPaintFrame extends JFrame {
 
 		String[] shapes = { "Rectangle", "Circle" };
 		JComboBox<String> shapeComboBox = new JComboBox<>(shapes);
+		shapeComboBox.addActionListener(e -> {
+			JComboBox<String> cb = (JComboBox<String>) e.getSource();
+			String shape = (String) cb.getSelectedItem();
+			drawingPanel.setActiveShape(shape);
+			drawingPanel.repaint();
+		});
 		shapeComboBox.setPreferredSize(new Dimension(100, 50));
+
+
+		
+		
 
 		/*
 		 * 9.
@@ -195,24 +217,32 @@ public class JPaintFrame extends JFrame {
 
 		menuManager = new MenuManager(this, drawingPanel);
 		this.setJMenuBar(menuManager.getMenu());
+
+		
+
 	}
 
 	
 
 	class CustomMouseAdapter extends MouseAdapter {
-
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (((Component) e.getSource()).getMousePosition() != null) {
 				// Uppdatera koordinater i statusBarPanel
 				statusBarPanel.updateCoordinates(e.getX(), e.getY());
+
+				if (drawingPanel.getDrawIsActive()) {
+					drawingPanel.setEndPoint(e.getX(), e.getY());
+					drawingPanel.repaint();
+				}
+
 			} else {
 				// Nollställ koordinater i statusBarPanel
 				statusBarPanel.updateCoordinates(0, 0);
 			}
 		}
 
-		@Override
+ 		@Override
 		public void mouseExited(MouseEvent e) {
 			// Nollställ koordinater i statusBarPanel
 			statusBarPanel.updateCoordinates(0, 0);
@@ -226,14 +256,21 @@ public class JPaintFrame extends JFrame {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			drawingPanel.setDrawIsActive(true);
-			statusBarPanel.updateCoordinates(e.getX(), e.getY());
+			if (((Component) e.getSource()) instanceof DrawingPanel) {
+				drawingPanel.setDrawIsActive(true);
+				drawingPanel.setStartPoint(e.getX(), e.getY());
+				
+				drawingPanel.setDrawColor(statusBarPanel.getSelectedColor());
+			}
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			statusBarPanel.updateCoordinates(0, 0);
-		}
+			drawingPanel.setDrawIsActive(false);
+			drawingPanel.addShape();
+		} 
 	}
+
+
 
 }

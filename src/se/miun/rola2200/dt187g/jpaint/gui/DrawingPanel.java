@@ -19,7 +19,7 @@ public class DrawingPanel extends JPanel {
 	private Drawing drawing;
 	private Color drawColor;
 	private boolean drawIsActive;
-	private String activeShape;
+	private String activeShape = "Rectangle";
 	private int x1, y1;
 	private int x2, y2;
 
@@ -48,12 +48,18 @@ public class DrawingPanel extends JPanel {
 
 	/// Uppgift 5 (. ❛ ᴗ ❛.)
 
+	
+
 	public Color getDrawColor() {
 		return this.drawColor;
 	}
 
 	public void setDrawColor(Color drawColor) {
 		this.drawColor = drawColor;
+	}
+
+	public boolean getDrawIsActive() {
+		return this.drawIsActive;
 	}
 
 	public boolean setDrawIsActive(boolean drawIsActive) {
@@ -64,8 +70,8 @@ public class DrawingPanel extends JPanel {
 		return this.activeShape;
 	}
 
-	public void setActiveShape(String activeShape) {
-		this.activeShape = activeShape;
+	public void setActiveShape(String shape) {
+		this.activeShape = shape;
 	}
 
 	// vill jag ha x1 som indata eller bara x? hermmmm

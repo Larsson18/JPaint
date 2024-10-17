@@ -2,6 +2,8 @@ package se.miun.rola2200.dt187g.jpaint.gui;
 
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.List;
+import java.lang.reflect.Field;
 
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
@@ -163,18 +165,39 @@ public class MenuManager {
 	private ActionListener createUndoAction() {
 		return al -> {
 			// TODO for assignment 5
+			Drawing drawing = drawingPanel.getDrawing();
+
+			if (drawing.getSize() > 0) {
+				drawing.removeShape(drawing.getSize() - 1);
+				drawingPanel.repaint();
+			}
 		};
 	}
 
 	private ActionListener showInfoAction() {
-		return al -> {
-			// TODO for assignment 5
-		};
-	}
+    return al -> {
+        Drawing drawing = drawingPanel.getDrawing();
+       
+                String name = drawing.getName();
+                int numberOfShapes = drawing.getSize();
+				double totalArea = drawing.getTotalArea(); // Example method, replace with actual
+				double totalCircumference = drawing.getTotalCircumference();
+
+                String message = String.format(
+                    "Name: %s\nNumber of shapes: %d\nTotal area: %.2f\nTotal circumference: %.2f",
+                    name, numberOfShapes, totalArea, totalCircumference
+                );
+
+                JOptionPane.showMessageDialog(frame, message, "Drawing Info", JOptionPane.INFORMATION_MESSAGE);
+           
+    };
+}
 
 	private ActionListener createLoadAction() {
 		return al -> {
 			// TODO for assignment 6
+			Drawing drawing = drawingPanel.getDrawing();
+			drawing.getSize();
 		};
 	}
 

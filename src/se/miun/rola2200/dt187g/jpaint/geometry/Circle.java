@@ -1,4 +1,6 @@
 package se.miun.rola2200.dt187g.jpaint.geometry;
+import java.awt.*;
+
 
 /**
  * A class representing a circle, also defined by two points.
@@ -57,7 +59,20 @@ package se.miun.rola2200.dt187g.jpaint.geometry;
 
     @Override
     public void draw(java.awt.Graphics g) {
-    }
+        Graphics2D graphics = (Graphics2D) g;
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        graphics.setColor(Color.decode(getColor()));
+        Point center = points.get(0);
+        double radius = getRadius();
+        
+        // Calculate the bounding box for the oval
+        int x = (int) (center.getX() - radius);
+        int y = (int) (center.getY() - radius);
+        int diameter = (int) (radius * 2);
+    
+        // Draw the oval (circle)
+        graphics.fillOval(x, y, diameter, diameter);    }
 
     @Override
     public void addPoint(Point p) {
