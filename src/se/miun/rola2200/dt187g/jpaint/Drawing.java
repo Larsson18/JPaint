@@ -109,6 +109,11 @@ public class Drawing implements Drawable {
         }
     }
 
+    
+    public ArrayList<Shape> getShapes() {
+        return shapes;
+    }
+
     @Override
     public void draw(java.awt.Graphics g) {
         for (Shape shape : shapes) {
